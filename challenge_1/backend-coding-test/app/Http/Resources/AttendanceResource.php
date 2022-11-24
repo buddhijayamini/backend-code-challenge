@@ -18,8 +18,8 @@ class AttendanceResource extends JsonResource
             'id' => $this->id,
             'employee' => new EmployeeResource($this->employee),
             'date' => $this->date,
-            'check in' => $this->check_in,
-            'check out' => $this->check_out
+            'check_in' => $this->check_in,
+            'check_out' => $this->check_out
         ];
     }
 }

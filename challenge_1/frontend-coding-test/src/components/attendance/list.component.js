@@ -6,25 +6,25 @@ import { useNavigate } from "react-router-dom";
 
 export default function List() {
 
-    const [employee, setEmployee] = useState([]);
+    const [attendance, setAttendance] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchEmployee = async () => {
+        const fetchAttendance = async () => {
            const response = await fetch(
-              'http://localhost:8000/api/v1/employee', {
+              'http://localhost:8000/api/v1/attendance', {
                 method: 'GET',
                 headers: {
                    'Content-type': 'application/json; charset=UTF-8',
               },}
            );
            const data = await response.json();
-           setEmployee(data.data);
+           setAttendance(data.data);
         };
-        fetchEmployee();
+        fetchAttendance();
      }, []);
     
-    const deleteEmployee = async (id) => {
+    const deleteAttendance = async (id) => {
         const isConfirm = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -42,7 +42,7 @@ export default function List() {
           }
 
            await fetch(
-            `http://localhost:8000/api/v1/employee/${id}`, {
+            `http://localhost:8000/api/v1/attendance/${id}`, {
               method: 'DELETE',
               headers: {
                  'Content-type': 'application/json; charset=UTF-8',
@@ -67,7 +67,7 @@ export default function List() {
           <div className="row">
             <div className='col-12'>
                 <Link className='btn btn-primary mb-2 float-end' to={"/employee/create"}>
-                    Create Employee
+                    Create Attendance
                 </Link>
             </div>
             <div className="col-12">
@@ -76,23 +76,25 @@ export default function List() {
                         <table className="table table-bordered mb-0 text-center">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Employee Name</th>
+                                    <th>Date</th>
+                                    <th>Check In</th>
+                                    <th>Check Out</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    employee.length > 0 && (
-                                        employee.map((row, key)=>(
+                                    attendance.length > 0 && (
+                                        attendance.map((row, key)=>(
                                             <tr key={key}>
-                                                <td>{row.name} </td>
-                                                <td>{row.email}</td>
-                                                <td>{row.tel}</td>
+                                                <td>{row.employee.name} </td>
+                                                <td>{row.date}</td>
+                                                <td>{row.check_in}</td>
+                                                <td>{row.check_out}</td>
                                               
                                                 <td>
-                                                    <Link to={`/employee/edit/${row.id}`} className='btn btn-success me-2'>
+                                                    <Link to={`/attendance/edit/${row.id}`} className='btn btn-success me-2'>
                                                         Edit
                                                     </Link>
                                                     <Button variant="danger" onClick={()=>deleteEmployee(row.id)}>

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AttendanceController;
+use App\Http\Controllers\Attendance\Application\AttendanceController as ApplicationAttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/import_excel', [AttendanceController::class,'viewExcel']);
+Route::post('/import_excel/import', [AttendanceController::class,'importView']);
+
+Route::get('/view_excel', [ApplicationAttendanceController::class,'index']);
+Route::get('/view_total_works', [AttendanceController::class,'viewTotHours']);
+Route::post('/store_excel', [ApplicationAttendanceController::class,'store']);
